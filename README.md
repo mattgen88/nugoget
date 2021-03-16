@@ -4,7 +4,6 @@ Nuget Go Get, because it's dumb I can't just easily update all my deps from the
 command line.
 
 ## Warning
-
 I really didn't put much work into this. Under the hood it just runs dotnet
 commands and parses the output. Will likely break with dotnet updates. Hopefully
 won't break when updating dependencies because it runs dotnet commands to
@@ -15,11 +14,13 @@ install the appropriate version.
 - dotnet 5, probably not lower, probably not higher.
 
 ## Built With
-
 - [github.com/spf13/cobra](https://github.com/spf13/cobra)
 
-## Usage
+## Installation
+`go get github.com/mattgen88/nugoget`
 
+
+## Usage
 `nugoget update`
 
 Automatically updates to the latest minor revision of dependencies. The sane
@@ -59,15 +60,12 @@ For when you want to read the instructions.
   - BECAUSE I LIKE WRITING GO, STOP JUDGING ME.
 
 ## Contributing
-
 Please don't. I don't have time. However, if you really want to, make it as easy
 and clean as possible for me to merge. Maybe I'll find time.
 
 ### Contributors
-
 Matthew General -- [https://digitalwny.com](digitalwny.com)
 
 ## License
-
 [MIT License](./LICENSE)
 
