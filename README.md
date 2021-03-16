@@ -64,7 +64,7 @@ Please don't. I don't have time. However, if you really want to, make it as easy
 and clean as possible for me to merge. Maybe I'll find time.
 
 ### Contributors
-Matthew General -- [https://digitalwny.com](digitalwny.com)
+Matthew General -- [digitalwny.com](https://digitalwny.com)
 
 ## License
 [MIT License](./LICENSE)
