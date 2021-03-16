@@ -71,64 +71,6 @@ func newPackageData(name, requested, resolved, latest string) *packageData {
 }
 
 func update(cmd *cobra.Command, args []string) {
-	// execute and capture nuget output
-	//dotnet list package --outdated
-	// default to appending --highest-minor
-	// flag to override --highest-minor to --highest-patch or remove flag entirely
-	// parse output
-
-	//	The following sources were used:
-	//	https://nexus.infra.acvauctions.com/repository/nuget-group/
-	//	https://api.nuget.org/v3/index.json
-	//
-	//  Project `Documents.Service` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package      Requested   Resolved   Latest
-	// 	> NewRelic.Agent       8.35.0      8.35.0     8.36.0
-	//
-	//  The given project `Documents.Domain` has no updates given the current sources.
-	//  The given project `Documents.Dtos` has no updates given the current sources.
-	//  Project `Documents.Infrastructure` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package               Requested   Resolved   Latest
-	// 	> ACV.Hydra.Shared.Workers      4.9.1       4.9.1      4.9.2
-	// 	> AWSSDK.Core                   3.5.1.42    3.5.1.42   3.5.1.48
-	// 	> AWSSDK.S3                     3.5.5.2     3.5.5.2    3.5.6.4
-	//
-	//  Project `Documents.Tests` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package                      Requested   Resolved   Latest
-	// 	> ACV.Hydra.Shared.Testing.Common      3.6.11      3.6.11     3.6.12
-	// 	> Microsoft.NET.Test.Sdk               16.8.0      16.8.0     16.8.3
-	//
-	//  Project `Documents.Application` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package                               Requested   Resolved   Latest
-	// 	> ACV.Hydra.DataHub.BusinessDocumentEvents      1.1.0       1.1.0      1.1.1
-	//
-	//  Project `Documents.EventListener.Worker` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package                           Requested   Resolved   Latest
-	// 	> ACV.Hydra.DataHub.OrganizationEvents      1.3.8       1.3.8      1.3.13
-	// 	> ACV.Hydra.Shared.Workers                  4.9.1       4.9.1      4.9.2
-	// 	> NewRelic.Agent                            8.35.0      8.35.0     8.36.0
-	//
-	//  Project `Documents.DealerDocs.Worker` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package                               Requested   Resolved   Latest
-	// 	> ACV.Hydra.DataHub.BusinessDocumentEvents      1.1.0       1.1.0      1.1.1
-	// 	> ACV.Hydra.Shared.Workers                      4.9.1       4.9.1      4.9.2
-	// 	> NewRelic.Agent                                8.35.0      8.35.0     8.36.0
-	//
-	//  The given project `Documents.Configuration` has no updates given the current sources.
-	//  The given project `Documents.DatabaseMigrator` has no updates given the current sources.
-	//  Project `Documents.Tests.API` has the following updates to its packages
-	// 	[netcoreapp3.1]:
-	// 	Top-level Package                      Requested   Resolved   Latest
-	// 	> ACV.Hydra.Shared.Testing.Common      3.6.11      3.6.11     3.6.12
-	// 	> Microsoft.NET.Test.Sdk               16.8.0      16.8.0     16.8.3
-	//
-
 	if major {
 		fmt.Println("Will do major upgrades!")
 	}
