@@ -107,9 +107,14 @@ func update(cmd *cobra.Command, args []string) {
 	if major {
 		// append nothing
 	} else if patch {
+		nugetArgs = append(nugetArgs, "--highest-patch")
+	} else {
 		nugetArgs = append(nugetArgs, "--highest-minor")
 	}
 
+	if debug {
+		fmt.Println("Executing: ", path, nugetArgs)
+	}
 	nugetCmd := exec.Command(path, nugetArgs...)
 
 	out, err := nugetCmd.CombinedOutput()
