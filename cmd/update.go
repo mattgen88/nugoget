@@ -87,6 +87,9 @@ func update(cmd *cobra.Command, args []string) {
 				os.Exit(ExitBadLock)
 			}
 			parts := strings.Split(lock, "#")
+			if debug {
+				fmt.Println("Locking package", parts[0], parts[1])
+			}
 			pkg := parts[0]
 			version := parts[1]
 			lockedPackages[pkg] = version
@@ -176,7 +179,11 @@ func update(cmd *cobra.Command, args []string) {
 				if dryRun {
 					continue
 				}
-				nugetCmd = exec.Command(path, "add", project.name, "package", dependency.name, "-v", dependency.latest)
+				nugetArgs := []string{"add", project.name, "package", dependency.name, "-v", dependency.latest}
+				nugetCmd = exec.Command(path, nugetArgs...)
+				if debug {
+					fmt.Println("Executing: ", path, nugetArgs)
+				}
 				out, err = nugetCmd.CombinedOutput()
 				if err != nil {
 					os.Exit(ExitBadCallOut)

@@ -11,7 +11,7 @@ install the appropriate version.
 
 ## Dependencies
 - go 1.15.8+, probably a lot lower too
-- dotnet 5, probably not lower, probably not higher.
+- dotnet 5, probably not lower, probably not higher. I'm abusing the output of the dotnet commands.
 
 ## Built With
 - [github.com/spf13/cobra](https://github.com/spf13/cobra)
@@ -35,7 +35,7 @@ This will probably break your project.
 `nugoget update --patch`
 
 Automatically updates to the latest patch revision of dependencies.
-This will probably fix your project. Unless you depend on bugs and you're _that_
+This will probably fix your project. Unless you depend on bugs, and you're _that_
 person, then it'll break it.
 
 
@@ -43,6 +43,10 @@ person, then it'll break it.
 
 For when you want to see what will likely break during a major update.
 
+`nugoget update --lock Microsoft.EntityFrameworkCore.Design#5.0.10 --lock Microsoft.EntityFrameworkCore.Tools#5.0.10 --lock Microsoft.EntityFrameworkCore.InMemory#5.0.10 --lock Microsoft.EntityFrameworkCore#5.0.10`
+
+This will update dependencies, locking version of specified packages. This is especially useful because the 
+Npgsql.EntityFrameworkCore.PostgreSQL package never keeps up with the rest of the EntityFrameworkCore releases.
 
 `nugoget update -h`
 
