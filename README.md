@@ -17,7 +17,7 @@ install the appropriate version.
 - [github.com/spf13/cobra](https://github.com/spf13/cobra)
 
 ## Installation
-`go get github.com/mattgen88/nugoget`
+`go install github.com/mattgen88/nugoget@latest`
 
 
 ## Usage
