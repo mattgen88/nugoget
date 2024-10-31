@@ -14,7 +14,7 @@ var (
 	updateCmd = &cobra.Command{
 		Use:   "update",
 		Short: "Updates the dependencies",
-		Long:  `For each project found, updates the dependencies`,
+		Long:  `For each project found, updates the dependencies. Both dotnet and find must be installed on the system.`,
 		Run:   update,
 	}
 	major  = false
@@ -122,15 +122,14 @@ func update(cmd *cobra.Command, args []string) {
 
 	out, err := nugetCmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error executing nuget list package command", string(out))
 		os.Exit(ExitBadCallOut)
 		panic(err)
 	}
 
 	lines := strings.Split(string(out), "\n")
 
-	var projects map[string]*project
-	projects = make(map[string]*project)
+	projects := make(map[string]*project)
 	var currentProject *project
 	updates := 0
 
@@ -142,14 +141,11 @@ func update(cmd *cobra.Command, args []string) {
 			projects[p.name] = p
 			currentProject = p
 			fmt.Printf("Checking for updates in %s\n", p.name)
-			break
 		case versionRegexp.MatchString(line):
 			matches := versionRegexp.FindStringSubmatch(line)
 			currentProject.version = newVersion()
 			currentProject.version.name = matches[1]
-			break
 		case headerRegexp.MatchString(line):
-			break
 		case packageVersionsRegexp.MatchString(line):
 			matches := packageVersionsRegexp.FindStringSubmatch(line)
 			if _, ok := lockedPackages[matches[1]]; ok {
@@ -161,9 +157,7 @@ func update(cmd *cobra.Command, args []string) {
 			if matches[2] != matches[4] {
 				updates++
 			}
-			break
 		case blankRegexp.MatchString(line):
-			break
 		default:
 
 		}
@@ -176,16 +170,29 @@ func update(cmd *cobra.Command, args []string) {
 		for _, dependency := range project.version.packageData {
 			if dependency.requested != dependency.latest {
 				fmt.Printf("%s will be updated from %s to %s\n", dependency.name, dependency.requested, dependency.latest)
+				projectPathArgs := []string{"-type", "d", "-iname", project.name}
+				if debug {
+					fmt.Println("Executing: ", "find", projectPathArgs)
+				}
+				projectPathCmd := exec.Command("find", projectPathArgs...)
+				projectPath, err := projectPathCmd.CombinedOutput()
+				if err != nil {
+					fmt.Println("Could not execute `find` command", err)
+					os.Exit(ExitBadCallOut)
+				}
+
+				nugetArgs := []string{"add", strings.TrimSpace(string(projectPath)), "package", dependency.name, "-v", dependency.latest}
+				fmt.Printf("Executing %s with args %s", path, nugetArgs)
 				if dryRun {
 					continue
 				}
-				nugetArgs := []string{"add", project.name, "package", dependency.name, "-v", dependency.latest}
 				nugetCmd = exec.Command(path, nugetArgs...)
 				if debug {
 					fmt.Println("Executing: ", path, nugetArgs)
 				}
 				out, err = nugetCmd.CombinedOutput()
 				if err != nil {
+					fmt.Println("Error executing dotnet add command", string(out))
 					os.Exit(ExitBadCallOut)
 				}
 
